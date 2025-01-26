@@ -1,0 +1,554 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		65AEAF2F2D4674AE003181A4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65AEAF152D4674AD003181A4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 65AEAF1C2D4674AD003181A4;
+			remoteInfo = "Oh One Pro";
+		};
+		65AEAF392D4674AE003181A4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65AEAF152D4674AD003181A4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 65AEAF1C2D4674AD003181A4;
+			remoteInfo = "Oh One Pro";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		65AEAF1D2D4674AD003181A4 /* Oh One Pro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Oh One Pro.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		65AEAF2E2D4674AE003181A4 /* Oh One ProTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Oh One ProTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		65AEAF382D4674AE003181A4 /* Oh One ProUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Oh One ProUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		65AEAF1F2D4674AD003181A4 /* Oh One Pro */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Oh One Pro";
+			sourceTree = "<group>";
+		};
+		65AEAF312D4674AE003181A4 /* Oh One ProTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Oh One ProTests";
+			sourceTree = "<group>";
+		};
+		65AEAF3B2D4674AE003181A4 /* Oh One ProUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Oh One ProUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		65AEAF1A2D4674AD003181A4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65AEAF2B2D4674AE003181A4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65AEAF352D4674AE003181A4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		65AEAF142D4674AD003181A4 = {
+			isa = PBXGroup;
+			children = (
+				65AEAF1F2D4674AD003181A4 /* Oh One Pro */,
+				65AEAF312D4674AE003181A4 /* Oh One ProTests */,
+				65AEAF3B2D4674AE003181A4 /* Oh One ProUITests */,
+				65AEAF1E2D4674AD003181A4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		65AEAF1E2D4674AD003181A4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				65AEAF1D2D4674AD003181A4 /* Oh One Pro.app */,
+				65AEAF2E2D4674AE003181A4 /* Oh One ProTests.xctest */,
+				65AEAF382D4674AE003181A4 /* Oh One ProUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		65AEAF1C2D4674AD003181A4 /* Oh One Pro */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 65AEAF422D4674AE003181A4 /* Build configuration list for PBXNativeTarget "Oh One Pro" */;
+			buildPhases = (
+				65AEAF192D4674AD003181A4 /* Sources */,
+				65AEAF1A2D4674AD003181A4 /* Frameworks */,
+				65AEAF1B2D4674AD003181A4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				65AEAF1F2D4674AD003181A4 /* Oh One Pro */,
+			);
+			name = "Oh One Pro";
+			packageProductDependencies = (
+			);
+			productName = "Oh One Pro";
+			productReference = 65AEAF1D2D4674AD003181A4 /* Oh One Pro.app */;
+			productType = "com.apple.product-type.application";
+		};
+		65AEAF2D2D4674AE003181A4 /* Oh One ProTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 65AEAF452D4674AE003181A4 /* Build configuration list for PBXNativeTarget "Oh One ProTests" */;
+			buildPhases = (
+				65AEAF2A2D4674AE003181A4 /* Sources */,
+				65AEAF2B2D4674AE003181A4 /* Frameworks */,
+				65AEAF2C2D4674AE003181A4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				65AEAF302D4674AE003181A4 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				65AEAF312D4674AE003181A4 /* Oh One ProTests */,
+			);
+			name = "Oh One ProTests";
+			packageProductDependencies = (
+			);
+			productName = "Oh One ProTests";
+			productReference = 65AEAF2E2D4674AE003181A4 /* Oh One ProTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		65AEAF372D4674AE003181A4 /* Oh One ProUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 65AEAF482D4674AE003181A4 /* Build configuration list for PBXNativeTarget "Oh One ProUITests" */;
+			buildPhases = (
+				65AEAF342D4674AE003181A4 /* Sources */,
+				65AEAF352D4674AE003181A4 /* Frameworks */,
+				65AEAF362D4674AE003181A4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				65AEAF3A2D4674AE003181A4 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				65AEAF3B2D4674AE003181A4 /* Oh One ProUITests */,
+			);
+			name = "Oh One ProUITests";
+			packageProductDependencies = (
+			);
+			productName = "Oh One ProUITests";
+			productReference = 65AEAF382D4674AE003181A4 /* Oh One ProUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		65AEAF152D4674AD003181A4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					65AEAF1C2D4674AD003181A4 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					65AEAF2D2D4674AE003181A4 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 65AEAF1C2D4674AD003181A4;
+					};
+					65AEAF372D4674AE003181A4 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 65AEAF1C2D4674AD003181A4;
+					};
+				};
+			};
+			buildConfigurationList = 65AEAF182D4674AD003181A4 /* Build configuration list for PBXProject "Oh One Pro" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 65AEAF142D4674AD003181A4;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 65AEAF1E2D4674AD003181A4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				65AEAF1C2D4674AD003181A4 /* Oh One Pro */,
+				65AEAF2D2D4674AE003181A4 /* Oh One ProTests */,
+				65AEAF372D4674AE003181A4 /* Oh One ProUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		65AEAF1B2D4674AD003181A4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65AEAF2C2D4674AE003181A4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65AEAF362D4674AE003181A4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		65AEAF192D4674AD003181A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65AEAF2A2D4674AE003181A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65AEAF342D4674AE003181A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		65AEAF302D4674AE003181A4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 65AEAF1C2D4674AD003181A4 /* Oh One Pro */;
+			targetProxy = 65AEAF2F2D4674AE003181A4 /* PBXContainerItemProxy */;
+		};
+		65AEAF3A2D4674AE003181A4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 65AEAF1C2D4674AD003181A4 /* Oh One Pro */;
+			targetProxy = 65AEAF392D4674AE003181A4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		65AEAF402D4674AE003181A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		65AEAF412D4674AE003181A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		65AEAF432D4674AE003181A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Oh One Pro/Oh_One_Pro.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Oh One Pro/Preview Content\"";
+				DEVELOPMENT_TEAM = 6D5N473QP3;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "co.podzim.Oh-One-Pro";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		65AEAF442D4674AE003181A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Oh One Pro/Oh_One_Pro.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Oh One Pro/Preview Content\"";
+				DEVELOPMENT_TEAM = 6D5N473QP3;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "co.podzim.Oh-One-Pro";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		65AEAF462D4674AE003181A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6D5N473QP3;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "co.podzim.Oh-One-ProTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Oh One Pro.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Oh One Pro";
+			};
+			name = Debug;
+		};
+		65AEAF472D4674AE003181A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6D5N473QP3;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "co.podzim.Oh-One-ProTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Oh One Pro.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Oh One Pro";
+			};
+			name = Release;
+		};
+		65AEAF492D4674AE003181A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6D5N473QP3;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "co.podzim.Oh-One-ProUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "Oh One Pro";
+			};
+			name = Debug;
+		};
+		65AEAF4A2D4674AE003181A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6D5N473QP3;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "co.podzim.Oh-One-ProUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "Oh One Pro";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		65AEAF182D4674AD003181A4 /* Build configuration list for PBXProject "Oh One Pro" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				65AEAF402D4674AE003181A4 /* Debug */,
+				65AEAF412D4674AE003181A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		65AEAF422D4674AE003181A4 /* Build configuration list for PBXNativeTarget "Oh One Pro" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				65AEAF432D4674AE003181A4 /* Debug */,
+				65AEAF442D4674AE003181A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		65AEAF452D4674AE003181A4 /* Build configuration list for PBXNativeTarget "Oh One ProTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				65AEAF462D4674AE003181A4 /* Debug */,
+				65AEAF472D4674AE003181A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		65AEAF482D4674AE003181A4 /* Build configuration list for PBXNativeTarget "Oh One ProUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				65AEAF492D4674AE003181A4 /* Debug */,
+				65AEAF4A2D4674AE003181A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 65AEAF152D4674AD003181A4 /* Project object */;
+}
