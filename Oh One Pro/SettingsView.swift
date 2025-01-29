@@ -28,7 +28,7 @@ struct SettingsView: View {
 //                        .foregroundColor(.blue)
 //                }
                 
-                Text("Oh One Pro is a free app by BoltAI. If you find the app useful, consider sharing BoltAI with your friends and colleagues. [Visit BoltAI Website](https://boltai.com?ref=ohonepro)")
+                Text("Oh One Pro is an app by BoltAI. If you find the app useful, consider sharing BoltAI with your friends and colleagues. [Visit BoltAI Website](https://boltai.com?ref=ohonepro)")
             }
             .formStyle(.grouped)
             .onChange(of: hideDockIcon) { hidden in
@@ -43,7 +43,7 @@ struct SettingsView: View {
                     // If hiding menu bar icon, ensure dock icon is visible
                     hideDockIcon = false
                 }
-                NotificationCenter.default.post(name: NSNotification.Name("ToggleStatusItem"), 
+                NotificationCenter.default.post(name: .toggleStatusItem, 
                                              object: nil, 
                                              userInfo: ["show": show])
             }

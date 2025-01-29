@@ -93,6 +93,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         )
         window?.delegate = self
         window?.center()
+        window?.makeKeyAndOrderFront(nil)
     }
     
     @objc private func toggleWindow() {
@@ -128,6 +129,22 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         } else {
             NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
         }
+    }
+    
+    // Handle files dropped onto the Dock icon
+    func application(_ sender: NSApplication, open urls: [URL]) {
+        // Show the window if it's not visible
+        if let window = window, !window.isVisible {
+            window.makeKeyAndOrderFront(nil)
+            NSApp.activate(ignoringOtherApps: true)
+        }
+        
+        // Post notification with the dropped URLs
+        NotificationCenter.default.post(
+            name: NSNotification.Name("FilesDroppedOnDock"),
+            object: nil,
+            userInfo: ["urls": urls]
+        )
     }
     
     // MARK: WindowDelegate

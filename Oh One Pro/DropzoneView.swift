@@ -13,8 +13,12 @@ struct DropzoneView: View {
     @State private var isDropTargeted = false
     @State private var pdfDocuments: [PDFDocument] = []
     @State private var previewImages: [NSImage] = []
-    @State private var isHovering = false
     @State private var textContents: [String] = []
+    @State private var isHovering = false
+    @State private var documentProcessor = DocumentProcessor()
+    @State private var copyTextFeedback = false
+    @State private var copyImageFeedback = false
+    @State private var isProcessingImages = false
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
@@ -62,60 +66,43 @@ struct DropzoneView: View {
             VStack(alignment: .center) {
                 if !previewImages.isEmpty {
                     // Stack of up to 3 thumbnails
-                    ZStack {
-                        // Show up to 3 thumbnails in a stack
-                        ForEach(Array(previewImages.prefix(3).enumerated()), id: \.offset) { index, image in
-                            Image(nsImage: image)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 100, height: 140)
-                                .clipShape(RoundedRectangle(cornerRadius: 6))
-                                .shadow(radius: 2)
-                                .rotationEffect(.degrees(Double(index) * 3))
-                                .offset(x: Double(index) * 10, y: Double(index) * -10)
-                        }
+                    GeometryReader { geometry in
+                        let width = min(geometry.size.width * 0.7, geometry.size.height * 0.5)  // Maintain aspect ratio
+                        let height = width * 1.4  // Keep 1:1.4 aspect ratio
                         
-                        // Action buttons
-                        if !droppedURLs.isEmpty {
-                            VStack(spacing: 12) {
-                                Button(action: copyText) {
-                                    Label("Copy as Text", systemImage: "doc.text")
-                                        .frame(maxWidth: .infinity)
-                                        .labelStyle(.titleOnly)
-                                }
-                                .buttonStyle(.bordered)
-                                .clipShape(.capsule)
-                                .controlSize(.large)
-                                .tint(.accentColor)
-                                .shadow(radius: 1)
-                                
-                                // Only show Copy as Images for PDFs
-                                if !pdfDocuments.isEmpty && pdfDocuments.allSatisfy({ $0.pageCount > 0 }) {
-                                    Button(action: copyImages) {
-                                        Label("Copy as Images", systemImage: "photo")
-                                            .frame(maxWidth: .infinity)
-                                            .labelStyle(.titleOnly)
-                                    }
-                                    .buttonStyle(.bordered)
-                                    .clipShape(.capsule)
-                                    .controlSize(.large)
-                                    .tint(.accentColor)
-                                    .shadow(radius: 1)
-                                }
+                        ZStack {
+                            // Show up to 3 thumbnails in a stack, secondary images first
+                            ForEach(Array(previewImages.prefix(3).enumerated()).reversed(), id: \.offset) { index, image in
+                                Image(nsImage: image)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: width, height: height)
+                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                                    .shadow(radius: 2)
+                                    .rotationEffect(.degrees(index == 0 ? 0 : (index == 1 ? -8 : 8)))
+                                    .offset(x: index == 0 ? 0 : (index == 1 ? -width*0.1 : width*0.1), y: index == 0 ? 0 : -height*0.03)
+                                    .zIndex(index == 0 ? 1 : 0)  // Main preview on top of secondary images
                             }
-                            .frame(maxWidth: 180)
-                            .padding(.bottom, 8)
-                            .opacity(isHovering ? 1 : 0)
-                            .animation(.easeInOut(duration: 0.2), value: isHovering)
+                            
+                            // Action buttons
+                            if !droppedURLs.isEmpty {
+                                actionButtons
+                                    .frame(maxWidth: width * 1.8)  // Make buttons wider as preview grows
+                                    .zIndex(2)  // Buttons always on top of everything
+                            }
                         }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .position(x: geometry.size.width/2, y: geometry.size.height/2)
                     }
-                    .frame(width: 140, height: 160)
                     
                     Text("^[\(droppedURLs.count) documents](inflect: true)")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 } else {
-                    dropZone
+                    GeometryReader { geometry in
+                        dropZone
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
                 }
             }
             
@@ -136,11 +123,33 @@ struct DropzoneView: View {
                     guard error == nil, let url = url else { return }
                     
                     DispatchQueue.main.async {
-                        handleDroppedFile(url)
+                        if isDirectory(url) {
+                            handleDroppedFolder(url)
+                        } else {
+                            handleDroppedFile(url)
+                        }
                     }
                 }
             }
             return true
+        }
+        .onAppear {
+            // Setup notification observer for Dock drops
+            NotificationCenter.default.addObserver(
+                forName: NSNotification.Name("FilesDroppedOnDock"),
+                object: nil,
+                queue: .main
+            ) { notification in
+                if let urls = notification.userInfo?["urls"] as? [URL] {
+                    for url in urls {
+                        if isDirectory(url) {
+                            handleDroppedFolder(url)
+                        } else {
+                            handleDroppedFile(url)
+                        }
+                    }
+                }
+            }
         }
     }
     
@@ -167,9 +176,54 @@ struct DropzoneView: View {
         pdfDocuments = []
         previewImages = []
         textContents = []
+        documentProcessor = DocumentProcessor()
+    }
+    
+    private func handleDroppedFolder(_ folderURL: URL) {
+        // Check if folder already exists
+        if droppedURLs.contains(folderURL) { return }
+        
+        let fileManager = FileManager.default
+        
+        // Create a new processor with the folder as root
+        documentProcessor = DocumentProcessor(rootURL: folderURL)
+        
+        // Add the folder URL first, but don't add to preview
+        droppedURLs.append(folderURL)
+        pdfDocuments.append(PDFDocument())  // Empty PDF document as placeholder
+        textContents.append("")  // Empty content for folder
+        
+        guard let enumerator = fileManager.enumerator(at: folderURL, includingPropertiesForKeys: [.isDirectoryKey]) else { return }
+        
+        for case let fileURL as URL in enumerator {
+            do {
+                let resourceValues = try fileURL.resourceValues(forKeys: [.isDirectoryKey])
+                if let isDirectory = resourceValues.isDirectory, !isDirectory {
+                    // Skip if file already exists
+                    if droppedURLs.contains(fileURL) { continue }
+                    
+                    // Only process text files for now
+                    if let content = try? String(contentsOf: fileURL, encoding: .utf8) {
+                        droppedURLs.append(fileURL)
+                        pdfDocuments.append(PDFDocument())  // Empty PDF document as placeholder
+                        textContents.append(content)
+                        let genericIcon = NSWorkspace.shared.icon(forFileType: fileURL.pathExtension)
+                        previewImages.append(genericIcon)
+                        
+                        // Add to document processor
+                        documentProcessor.addDocument(ProcessedDocument(url: fileURL, content: content, isPDF: false))
+                    }
+                }
+            } catch {
+                print("Error accessing file: \(error)")
+            }
+        }
     }
     
     private func handleDroppedFile(_ url: URL) {
+        // Check if file already exists
+        if droppedURLs.contains(url) { return }
+        
         if url.pathExtension.lowercased() == "pdf" {
             if let pdf = PDFDocument(url: url) {
                 droppedURLs.append(url)
@@ -179,6 +233,8 @@ struct DropzoneView: View {
                     let pageImage = pdfPage.thumbnail(of: CGSize(width: 400, height: 400), for: .artBox)
                     previewImages.append(pageImage)
                 }
+                // Add to document processor
+                documentProcessor.addDocument(ProcessedDocument(url: url, content: pdf.string ?? "", isPDF: true))
             }
         } else {
             // Handle text documents
@@ -187,16 +243,86 @@ struct DropzoneView: View {
                 droppedURLs.append(url)
                 pdfDocuments.append(PDFDocument())  // Empty PDF document as placeholder
                 textContents.append(content)
-                // Use a generic document icon for text files
                 let genericIcon = NSWorkspace.shared.icon(forFileType: url.pathExtension)
                 previewImages.append(genericIcon)
+                // Add to document processor
+                documentProcessor.addDocument(ProcessedDocument(url: url, content: content, isPDF: false))
             } catch {
                 print("Error reading file: \(error)")
             }
         }
     }
     
-    private func copyImages() {
+    private var actionButtons: some View {
+        VStack(spacing: 12) {
+            Button(action: {
+                copyText()
+                withAnimation {
+                    copyTextFeedback = true
+                }
+                // Reset after delay
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    withAnimation {
+                        copyTextFeedback = false
+                    }
+                }
+            }) {
+                Label(copyTextFeedback ? "Copied!" : "Copy as Text", systemImage: copyTextFeedback ? "checkmark" : "doc.text")
+                    .frame(maxWidth: .infinity)
+                    .labelStyle(.titleOnly)
+            }
+            .buttonStyle(.bordered)
+            .clipShape(.capsule)
+            .controlSize(.large)
+            .tint(.accentColor)
+            .shadow(radius: 1)
+            
+            // Only show Copy as Images for PDFs
+            if !pdfDocuments.isEmpty && pdfDocuments.allSatisfy({ $0.pageCount > 0 }) {
+                Button(action: {
+                    Task { @MainActor in
+                        // Start with UI update on main thread
+                        isProcessingImages = true
+                        
+                        // Do heavy work in background
+                        await Task.detached(priority: .userInitiated) {
+                            await copyImages()
+                        }.value
+                        
+                        // UI updates back on main thread
+                        isProcessingImages = false
+                        copyImageFeedback = true
+                        
+                        // Reset after delay
+                        try? await Task.sleep(nanoseconds: 2_000_000_000) // 2 seconds
+                        copyImageFeedback = false
+                    }
+                }) {
+                    if isProcessingImages {
+                        ProgressView()
+                            .controlSize(.small)
+                            .frame(maxWidth: .infinity)
+                    } else {
+                        Label(copyImageFeedback ? "Copied!" : "Copy as Images", systemImage: copyImageFeedback ? "checkmark" : "photo")
+                            .frame(maxWidth: .infinity)
+                            .labelStyle(.titleOnly)
+                    }
+                }
+                .buttonStyle(.bordered)
+                .clipShape(.capsule)
+                .controlSize(.large)
+                .tint(.accentColor)
+                .shadow(radius: 1)
+                .disabled(isProcessingImages)
+            }
+        }
+        .frame(maxWidth: 180)
+        .padding(.bottom, 8)
+        .opacity(isHovering ? 1 : 0)
+        .animation(.easeInOut(duration: 0.2), value: isHovering)
+    }
+    
+    private func copyImages() async {
         guard !pdfDocuments.isEmpty else { return }
         var temporaryFiles: [URL] = []
         
@@ -217,17 +343,26 @@ struct DropzoneView: View {
         // Collect pages from all PDFs and stitch them together
         for pdf in pdfDocuments {
             for i in 0..<pdf.pageCount {
-                if let page = pdf.page(at: i) {
-                    let image = page.thumbnail(of: CGSize(width: 1024, height: 1024), for: .mediaBox)
-                    currentPages.append(image)
+                // Run UI-related code on main thread
+                let page = await MainActor.run {
+                    pdf.page(at: i)?.thumbnail(of: CGSize(width: 1024, height: 1024), for: .mediaBox)
+                }
+                
+                if let page = page {
+                    currentPages.append(page)
                     pageCounter += 1
                     
                     // When we have enough pages or it's the last page, stitch and save
                     if currentPages.count == pagesPerImage || pageCounter == totalPages {
-                        if let stitchedImage = stitchImages(currentPages) {
+                        if let stitchedImage = await MainActor.run(body: {
+                            stitchImages(currentPages)
+                        }) {
                             let fileURL = tempDir.appendingPathComponent("pages_\((pageCounter/pagesPerImage) + 1).jpg")
                             
-                            if let cgImage = stitchedImage.cgImage(forProposedRect: nil, context: nil, hints: nil) {
+                            // Run image saving in background
+                            if let cgImage = await MainActor.run(body: {
+                                stitchedImage.cgImage(forProposedRect: nil, context: nil, hints: nil)
+                            }) {
                                 let bitmapRep = NSBitmapImageRep(cgImage: cgImage)
                                 if let imageData = bitmapRep.representation(using: .jpeg, properties: [.compressionFactor: 0.85]) {
                                     try? imageData.write(to: fileURL)
@@ -242,11 +377,14 @@ struct DropzoneView: View {
         }
         
         if !temporaryFiles.isEmpty {
-            NSPasteboard.general.clearContents()
-            NSPasteboard.general.writeObjects(temporaryFiles as [NSPasteboardWriting])
+            await MainActor.run {
+                NSPasteboard.general.clearContents()
+                NSPasteboard.general.writeObjects(temporaryFiles as [NSPasteboardWriting])
+            }
             
             // Schedule cleanup after 1 hour
-            DispatchQueue.main.asyncAfter(deadline: .now() + 60 * 60) {
+            Task {
+                try? await Task.sleep(nanoseconds: 3600_000_000_000) // 1 hour
                 try? FileManager.default.removeItem(at: tempDir)
             }
         }
@@ -287,36 +425,7 @@ struct DropzoneView: View {
     
     private func copyText() {
         do {
-            let xmlDoc = XMLDocument(kind: .document)
-            let rootElement = XMLElement(name: "files")
-            xmlDoc.setRootElement(rootElement)
-            
-            for (index, url) in droppedURLs.enumerated() {
-                let fileElement = XMLElement(name: "file")
-                
-                // Add file name as attribute
-                let nameAttr = XMLNode(kind: .attribute)
-                nameAttr.name = "name"
-                nameAttr.stringValue = url.lastPathComponent
-                fileElement.addAttribute(nameAttr)
-                
-                // Add content element
-                let contentElement = XMLElement(name: "content")
-                let text: String
-                if url.pathExtension.lowercased() == "pdf" {
-                    text = pdfDocuments[index].string ?? ""
-                } else {
-                    text = textContents[index]
-                }
-                contentElement.stringValue = text
-                
-                fileElement.addChild(contentElement)
-                rootElement.addChild(fileElement)
-            }
-            
-            // Generate formatted XML string
-            let xmlString = xmlDoc.xmlString(options: [.nodePrettyPrint, .nodeCompactEmptyElement])
-            
+            let xmlString = try documentProcessor.generateXML()
             NSPasteboard.general.clearContents()
             NSPasteboard.general.setString(xmlString, forType: .string)
         } catch {
@@ -346,6 +455,61 @@ struct DropzoneView: View {
         } else {
             NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
         }
+    }
+    
+    private func isDirectory(_ url: URL) -> Bool {
+        var isDirectory: ObjCBool = false
+        FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory)
+        return isDirectory.boolValue
+    }
+}
+
+struct CustomWindowStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .frame(minWidth: 260, minHeight: 220)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background {
+                VisualEffectView(material: .hudWindow, blendingMode: .behindWindow)
+            }
+//            .clipShape(.rect(cornerRadii: .init(topLeading: 0, bottomLeading: 20, bottomTrailing: 20, topTrailing: 0)))
+    }
+}
+
+struct VisualEffectView: NSViewRepresentable {
+    let material: NSVisualEffectView.Material
+    let blendingMode: NSVisualEffectView.BlendingMode
+    
+    func makeNSView(context: Context) -> NSVisualEffectView {
+        let view = NSVisualEffectView()
+        view.material = material
+        view.blendingMode = blendingMode
+        view.state = .active
+        return view
+    }
+    
+    func updateNSView(_ nsView: NSVisualEffectView, context: Context) {
+        nsView.material = material
+        nsView.blendingMode = blendingMode
+    }
+}
+
+struct TitleBarView: View {
+    var body: some View {
+        HStack(spacing: 8) {
+            Circle()
+                .fill(Color.red)
+                .frame(width: 12, height: 12)
+            Circle()
+                .fill(Color.yellow)
+                .frame(width: 12, height: 12)
+            Circle()
+                .fill(Color.green)
+                .frame(width: 12, height: 12)
+            Spacer()
+        }
+        .padding(.horizontal)
+        .padding(.vertical, 8)
     }
 }
 

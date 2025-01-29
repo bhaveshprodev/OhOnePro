@@ -13,6 +13,10 @@ extension KeyboardShortcuts.Name {
     static let toggleOhOnePro = Self("toggleOhOnePro")
 }
 
+extension Notification.Name {
+    static let toggleStatusItem = Notification.Name("toggleStatusItem")
+}
+
 extension NSApplication {
     static func setDockIconVisible(_ visible: Bool) {
         if visible {
