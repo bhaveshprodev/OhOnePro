@@ -19,14 +19,18 @@ struct SettingsView: View {
                 
                 KeyboardShortcuts.Recorder("Toggle Oh One Pro", name: .toggleOhOnePro)
                 
-//                HStack {
-//                    Text("©2025 BoltAI")
-//                    
-//                    Spacer()
-//                    
-//                    Link("Visit BoltAI Website", destination: URL(string: "https://boltai.com?ref=ohonepro")!)
-//                        .foregroundColor(.blue)
-//                }
+                HStack {
+                    Text("©2025 BoltAI.")
+
+                    
+                    Spacer()
+                    
+                    Link("Acknowledgement", destination: URL(string: "https://ohonepro.com/acknowledgement")!)
+                        .foregroundColor(.blue)
+                    
+                    Link("Privacy Policy", destination: URL(string: "https://ohonepro.com/privacy")!)
+                        .foregroundColor(.blue)
+                }
                 
                 Text("Oh One Pro is an app by BoltAI. If you find the app useful, consider sharing BoltAI with your friends and colleagues. [Visit BoltAI Website](https://boltai.com?ref=ohonepro)")
             }
@@ -48,7 +52,6 @@ struct SettingsView: View {
                                              userInfo: ["show": show])
             }
         }
-        .frame(width: 400, height: 280)
     }
 }
 

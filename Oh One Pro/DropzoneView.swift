@@ -49,6 +49,13 @@ struct DropzoneView: View {
                     Button("Clear All Items") {
                         reset()
                     }
+                    
+                    Divider()
+                    
+                    Button("Check for updates...") {
+                        AppState.shared.checkForUpdates()
+                    }
+                    
                     Button("Settings...") {
                         openSettings()
                     }

@@ -15,6 +15,21 @@ struct Oh_One_ProApp: App {
     var body: some Scene {
         Settings {
             SettingsView()
+                .frame(width: 420)
+                .frame(maxHeight: 320)
+        }
+        .commands {
+            CommandGroup(replacing: CommandGroupPlacement.appInfo) {
+                Button("About Oh One Pro") {
+                    appDelegate.showAbout()
+                }
+            }
+            
+            CommandGroup(after: CommandGroupPlacement.appInfo) {
+                Button("Check for Updates...") {
+                    AppState.shared.checkForUpdates()
+                }
+            }
         }
     }
 }

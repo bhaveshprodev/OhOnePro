@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		656508062D4CDDA800EBEBED /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 656508052D4CDDA800EBEBED /* Sparkle */; };
 		65AEAF532D48E103003181A4 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 65AEAF522D48E103003181A4 /* LaunchAtLogin */; };
 		65AEAF562D48E164003181A4 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 65AEAF552D48E164003181A4 /* KeyboardShortcuts */; };
 /* End PBXBuildFile section */
@@ -57,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				656508062D4CDDA800EBEBED /* Sparkle in Frameworks */,
 				65AEAF532D48E103003181A4 /* LaunchAtLogin in Frameworks */,
 				65AEAF562D48E164003181A4 /* KeyboardShortcuts in Frameworks */,
 			);
@@ -121,6 +123,7 @@
 			packageProductDependencies = (
 				65AEAF522D48E103003181A4 /* LaunchAtLogin */,
 				65AEAF552D48E164003181A4 /* KeyboardShortcuts */,
+				656508052D4CDDA800EBEBED /* Sparkle */,
 			);
 			productName = "Oh One Pro";
 			productReference = 65AEAF1D2D4674AD003181A4 /* Oh One Pro.app */;
@@ -207,6 +210,7 @@
 			packageReferences = (
 				65AEAF512D48E103003181A4 /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */,
 				65AEAF542D48E164003181A4 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
+				656508042D4CDDA800EBEBED /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 65AEAF1E2D4674AD003181A4 /* Products */;
@@ -408,7 +412,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Oh One Pro/Oh_One_Pro.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Oh One Pro/Preview Content\"";
 				DEVELOPMENT_TEAM = 6D5N473QP3;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -423,7 +427,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "co.podzim.Oh-One-Pro";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -439,7 +443,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Oh One Pro/Oh_One_Pro.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Oh One Pro/Preview Content\"";
 				DEVELOPMENT_TEAM = 6D5N473QP3;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -454,7 +458,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "co.podzim.Oh-One-Pro";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -572,6 +576,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		656508042D4CDDA800EBEBED /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.6.4;
+			};
+		};
 		65AEAF512D48E103003181A4 /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sindresorhus/LaunchAtLogin-Modern";
@@ -591,6 +603,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		656508052D4CDDA800EBEBED /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 656508042D4CDDA800EBEBED /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
 		65AEAF522D48E103003181A4 /* LaunchAtLogin */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 65AEAF512D48E103003181A4 /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */;

@@ -9,6 +9,7 @@ import SwiftUI
 import KeyboardShortcuts
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
+    var aboutWindow: NSWindow?
     var window: FloatingPanel?
     var statusItem: NSStatusItem?
     
@@ -17,7 +18,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(handleStatusItemToggle),
-            name: NSNotification.Name("ToggleStatusItem"),
+            name: .toggleStatusItem,
             object: nil
         )
         
@@ -169,5 +170,26 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         }
 
         return false
+    }
+    
+    // MARK: About Window
+    func showAbout() {
+        if let aboutWindow {
+            aboutWindow.makeKeyAndOrderFront(nil)
+        } else {
+            aboutWindow = .init(contentRect: NSRect(x: 300, y: 300, width: 300, height: 300), styleMask: [.titled, .closable, .miniaturizable, .resizable,
+            ], backing: .buffered, defer: false)
+            aboutWindow?.titleVisibility = .hidden
+            aboutWindow?.titlebarAppearsTransparent = true
+            aboutWindow?.isMovableByWindowBackground = true
+            
+            aboutWindow?.contentViewController = NSHostingController(
+                rootView: AboutView()
+                    .ignoresSafeArea()
+            )
+            aboutWindow?.delegate = self
+            aboutWindow?.center()
+            aboutWindow?.makeKeyAndOrderFront(nil)
+        }
     }
 }
