@@ -1,9 +1,12 @@
 import Foundation
+import Vision
+import AppKit
 
 struct ProcessedDocument {
     let url: URL
     let content: String
     let isPDF: Bool
+    let isImage: Bool // New flag for image documents
 }
 
 class DocumentProcessor {
@@ -20,6 +23,40 @@ class DocumentProcessor {
     
     func clear() {
         documents.removeAll()
+    }
+    
+    // MARK: - OCR for Images
+    func processImage(url: URL, completion: @escaping (ProcessedDocument?) -> Void) {
+        guard let image = NSImage(contentsOf: url),
+              let tiffData = image.tiffRepresentation,
+              let bitmap = NSBitmapImageRep(data: tiffData),
+              let ciImage = CIImage(bitmapImageRep: bitmap) else {
+            completion(nil)
+            return
+        }
+        let requestHandler = VNImageRequestHandler(ciImage: ciImage, options: [:])
+        let request = VNRecognizeTextRequest { (request, error) in
+            guard error == nil else {
+                completion(nil)
+                return
+            }
+            let recognizedStrings = request.results?.compactMap { result in
+                (result as? VNRecognizedTextObservation)?.topCandidates(1).first?.string
+            } ?? []
+            let content = recognizedStrings.joined(separator: "\n")
+            let doc = ProcessedDocument(url: url, content: content, isPDF: false, isImage: true)
+            completion(doc)
+        }
+        request.recognitionLevel = .accurate
+        request.recognitionLanguages = ["en-US"]
+        request.usesLanguageCorrection = true
+        DispatchQueue.global(qos: .userInitiated).async {
+            do {
+                try requestHandler.perform([request])
+            } catch {
+                completion(nil)
+            }
+        }
     }
     
     func generateXML() throws -> String {
@@ -39,7 +76,7 @@ class DocumentProcessor {
         // If there are no documents, return empty root element
         if documents.isEmpty {
             return """
-                <?xml version="1.0" encoding="utf-8" standalone="yes"?>
+                <?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>
                 <\(isFolder ? "folder" : "files")\(isFolder ? " name=\"\(rootURL?.lastPathComponent ?? "")\"" : "")/>
                 """
         }
@@ -77,8 +114,8 @@ class DocumentProcessor {
                     nameAttr.stringValue = String(component)
                     folderElement.addAttribute(nameAttr)
                     
-                    currentElement.addChild(folderElement)
                     folderStructure[currentPath] = folderElement
+                    currentElement.addChild(folderElement)
                     currentElement = folderElement
                 }
             }
@@ -105,4 +142,4 @@ class DocumentProcessor {
         FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory)
         return isDirectory.boolValue
     }
-} 
+}

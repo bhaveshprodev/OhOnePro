@@ -218,7 +218,7 @@ struct DropzoneView: View {
                         previewImages.append(genericIcon)
                         
                         // Add to document processor
-                        documentProcessor.addDocument(ProcessedDocument(url: fileURL, content: content, isPDF: false))
+                        documentProcessor.addDocument(ProcessedDocument(url: fileURL, content: content, isPDF: false, isImage: false))
                     }
                 }
             } catch {
@@ -231,7 +231,10 @@ struct DropzoneView: View {
         // Check if file already exists
         if droppedURLs.contains(url) { return }
         
-        if url.pathExtension.lowercased() == "pdf" {
+        let imageExtensions = ["png", "jpg", "jpeg", "tiff", "bmp", "gif", "heic"]
+        let fileExt = url.pathExtension.lowercased()
+        
+        if fileExt == "pdf" {
             if let pdf = PDFDocument(url: url) {
                 droppedURLs.append(url)
                 pdfDocuments.append(pdf)
@@ -241,7 +244,31 @@ struct DropzoneView: View {
                     previewImages.append(pageImage)
                 }
                 // Add to document processor
-                documentProcessor.addDocument(ProcessedDocument(url: url, content: pdf.string ?? "", isPDF: true))
+                documentProcessor.addDocument(ProcessedDocument(url: url, content: pdf.string ?? "", isPDF: true, isImage: false))
+            }
+        } else if imageExtensions.contains(fileExt) {
+            // Handle image files with OCR
+            isProcessingImages = true
+            if let nsImage = NSImage(contentsOf: url) {
+                previewImages.append(nsImage)
+            } else {
+                let genericIcon = NSWorkspace.shared.icon(forFileType: url.pathExtension)
+                previewImages.append(genericIcon)
+            }
+            droppedURLs.append(url)
+            pdfDocuments.append(PDFDocument())  // Placeholder for image
+            textContents.append("") // Will be updated after OCR
+            documentProcessor.processImage(url: url) { doc in
+                DispatchQueue.main.async {
+                    if let doc = doc {
+                        // Replace the last textContents entry with OCR result
+                        if let idx = droppedURLs.firstIndex(of: url) {
+                            textContents[idx] = doc.content
+                        }
+                        documentProcessor.addDocument(doc)
+                    }
+                    isProcessingImages = false
+                }
             }
         } else {
             // Handle text documents
@@ -253,7 +280,7 @@ struct DropzoneView: View {
                 let genericIcon = NSWorkspace.shared.icon(forFileType: url.pathExtension)
                 previewImages.append(genericIcon)
                 // Add to document processor
-                documentProcessor.addDocument(ProcessedDocument(url: url, content: content, isPDF: false))
+                documentProcessor.addDocument(ProcessedDocument(url: url, content: content, isPDF: false, isImage: false))
             } catch {
                 print("Error reading file: \(error)")
             }
