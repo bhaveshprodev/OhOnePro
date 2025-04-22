@@ -15,8 +15,9 @@ struct Oh_One_ProApp: App {
     var body: some Scene {
         Settings {
             SettingsView()
-                .frame(width: 420)
-                .frame(maxHeight: 320)
+                .frame(width: 500)
+                .frame(minHeight: 530)
+                .frame(maxHeight: 600)
         }
         .commands {
             CommandGroup(replacing: CommandGroupPlacement.appInfo) {
